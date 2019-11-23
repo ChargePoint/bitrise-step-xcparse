@@ -18,7 +18,6 @@ source_code_url: https://github.com/ChargePoint/bitrise-step-xcparse
 support_url: https://github.com/ChargePoint/bitrise-step-xcparse/issues
 host_os_tags:
   - osx-10.10
-  - ubuntu-16.04
 
 # If this step should be available only for certain project types
 # just uncomment this `project_type_tags` section and include all the
@@ -29,14 +28,13 @@ host_os_tags:
 # You can find more information about project type tags in the Step Development Guideline:
 # https://github.com/bitrise-io/bitrise/blob/master/_docs/step-development-guideline.md
 #
-# project_type_tags:
-#   - ios
-#   - macos
-#   - android
-#   - xamarin
-#   - react-native
-#   - cordova
-#   - ionic
+project_type_tags:
+  - ios
+  - macos
+  - cordova
+  - ionic
+  - react-native
+  - flutter
 
 # Type tags are used for categorizing steps, for easier step discovery in Step Libraries.
 # You can find more information about type tags in the Step Development Guideline:
@@ -50,12 +48,12 @@ is_skippable: false
 run_if: ""
 
 deps:
+  check_only:
+  - name: xcode
   brew:
   - name: git
   - name: wget
-  apt_get:
-  - name: git
-  - name: wget
+  - name: ChargePoint/xcparse/xcparse
 
 
 toolkit:
@@ -64,24 +62,37 @@ toolkit:
 
 
 inputs:
-  - example_step_input: Default Value - you can leave this empty if you want to
+  - xcresult_path: $BITRISE_XCRESULT_PATH
     opts:
-      title: "Example Step Input"
-      summary: Summary. No more than 2-3 sentences.
-      description: |
-        Description of this input.
-
-        Can be Markdown formatted text.
-      is_expand: true
+      title: "xcresult path"
+      description: |-
+          A `.xcresult` path, relative to the working directory (if specified).
       is_required: true
-      value_options: []
+      is_expand: true
 
 outputs:
-  - EXAMPLE_STEP_OUTPUT:
+  - XCPARSE_ATTACHMENTS_PATH:
     opts:
-      title: "Example Step Output"
-      summary: Summary. No more than 2-3 sentences.
-      description: |
-        Description of this output.
-
-        Can be Markdown formatted text.
+        title: The full, test attachments zip path
+        description: |-
+            This is the path of the test attachments zip.
+  - XCPARSE_CODE_COVERAGE_PATH:
+    opts:
+        title: The full, test code coverage zip path
+        description: |-
+            This is the path of the test code coverage zip.
+  - XCPARSE_LOGS_PATH:
+    opts:
+        title: The full, test logs zip path
+        description: |-
+            This is the path of the test logs zip.
+  - XCPARSE_SCREENSHOTS_PATH:
+    opts:
+        title: The full, test screenshots zip path
+        description: |-
+            This is the path of the test screenshots zip.
+  - XCPARSE_VERSION:
+    opts:
+        title: xcparse version
+        description: |-
+            This is the version of xcparse used for extraction.
