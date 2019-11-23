@@ -1,6 +1,6 @@
-# xcparse
+# [xcparse](https://github.com/ChargePoint/xcparse)
 
-Extract screenshots, attachments, code coverage, logs, & more from Xcode 11+ xcresult
+Extract screenshots, attachments, code coverage, logs, & more from Xcode 11+ xcresult using the Swift command line tool [xcparse](https://github.com/ChargePoint/xcparse)
 
 ## Adding to your Bitrise workflow
 
