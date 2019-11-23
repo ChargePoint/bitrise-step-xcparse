@@ -2,6 +2,34 @@
 
 Extract screenshots, attachments, code coverage, logs, & more from Xcode 11+ xcresult
 
+## Adding to your Bitrise workflow
+
+This is currently a proof-of-concept (POC) that performs all xcparse extraction operations with no options.
+
+To add this prototype to your Bitrise flow, edit your bitrise.yml in the Workflow Editor and insert the following after your Xcode Test step but before your Deploy to Bitrise step:
+
+```
+    - git::https://github.com/ChargePoint/bitrise-step-xcparse.git@master:
+        title: xcparse
+    - script@1.1.5:
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+            # fail if any commands fails
+            set -e
+            # debug log
+            set -x
+
+            mv "$XCPARSE_ATTACHMENTS_PATH" "$BITRISE_DEPLOY_DIR"
+            mv "$XCPARSE_CODE_COVERAGE_PATH" "$BITRISE_DEPLOY_DIR"
+            mv "$XCPARSE_LOGS_PATH" "$BITRISE_DEPLOY_DIR"
+            mv "$XCPARSE_SCREENSHOTS_PATH" "$BITRISE_DEPLOY_DIR"
+        title: Move xcparse results to Deploy
+```
+
+This will run the step & move the ZIP folders created into the Bitrise deploy directory so they'll show in the build artifacts.
+
+If you do not use the Xcode Test, after editing the bitrise.yml & saving the changes, you'll need to go into the GUI Workflow Editor & change the xcresult path to the path of your xcresult.
 
 ## How to use this Step
 
