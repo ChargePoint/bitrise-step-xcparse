@@ -41,6 +41,10 @@ workflows:
         run_if: true
         inputs:
         - xcresult_path: Test.xcresult
+        - extract_attachments: "no"
+        - extract_code_coverage: "no"
+        - extract_logs: "yes"
+        - extract_screenshots: "yes"
     - script:
         inputs:
         - content: |
