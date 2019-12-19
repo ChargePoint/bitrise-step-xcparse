@@ -4,18 +4,19 @@ Extract screenshots, attachments, code coverage, logs, & more from Xcode 11+ xcr
 
 ## Adding to your Bitrise workflow
 
-This is currently a proof-of-concept (POC) that performs all xcparse extraction operations with no options.
+This step is a part of Bitrise's StepLib so you can add it to your workflow by going to the Workflow Editor in [Bitrise](https://bitrise.io) and adding the step after your Xcode Test step.
 
-To add this prototype to your Bitrise flow, edit your bitrise.yml in the Workflow Editor and insert the following after your Xcode Test step but before your Deploy to Bitrise step:
+![Search "xcparse" in Search Steps](Docs/Images/search_xcparse.png?raw=true)
 
-```
-    - git::https://github.com/ChargePoint/bitrise-step-xcparse.git@master:
-        title: xcparse
-```
+The step should be inserted after your "Xcode Test" step or whatever step is generating your xcresult, but before your "Deploy to Bitrise.io" step.
 
-This will run the step & move the ZIP folders created into the Bitrise deploy directory so they'll show in the build artifacts.
+Ensure when added that you enable "Run if previous Step failed" to ensure that your xcresult is parsed even when one of the tests in your Xcode Test step fails. Failure to do so will lead to the xcparse step being skipped if any test fails.
 
-If you do not use the Xcode Test, after editing the bitrise.yml & saving the changes, you'll need to go into the GUI Workflow Editor & change the xcresult path to the path of your xcresult.
+![Ensure to enable "Run If Previous Step Failed"](Docs/Images/enable_run_if_previous_failed.png?raw=true)
+
+If you're not using Bitrise's Xcode Test step, update the xcresult path input variable with the path to your xcresult.
+
+Resulting files will be placed within ZIPs that can be downloaded in your "Apps & Artifacts" tab once the build is complete. The paths to these ZIPs are provided as output variables if you want to use them directly in your other steps.
 
 ## How to use this Step
 
@@ -44,6 +45,20 @@ envs:
 - A_SECRET_PARAM_ONE: the value for secret one
 - A_SECRET_PARAM_TWO: the value for secret two
 ```
+
+If you wish to see your UI changes while working locally, follow [this guide ](https://devcenter.bitrise.io/bitrise-cli/offline-workflow-editor/) to use the offline Workflow Editor.
+
+## Testing your PR in Bitrise.io
+
+If you want to test your PR changes in Bitrise.io, edit your bitrise.yml in the Workflow Editor and insert the following after your Xcode Test step but before your Deploy to Bitrise step:
+
+```
+    - git::https://github.com/ChargePoint/bitrise-step-xcparse.git@master:
+        title: xcparse
+```
+
+Ensure to change the GitHub HTTPS link to your forked repo's URL & to change "master" to the name of the branch you're wanting to test.
+
 
 ## How to create your own step
 
