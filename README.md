@@ -18,6 +18,8 @@ If you're not using Bitrise's Xcode Test step, update the xcresult path input va
 
 Resulting files will be placed within ZIPs that can be downloaded in your "Apps & Artifacts" tab once the build is complete. The paths to these ZIPs are provided as output variables if you want to use them directly in your other steps.
 
+![Screenshots.zip in Bitrise build's "Apps & Artifacts" tab](Docs/Images/app_artifacts.png?raw=true)
+
 ## How to use this Step
 
 Can be run directly with the [bitrise CLI](https://github.com/bitrise-io/bitrise),
